@@ -23,11 +23,12 @@ export class TasksService {
     return task;
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    const task = this.tasksRepository.update({ id }, updateTaskDto);
+    return task;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} task`;
+
   }
 }
