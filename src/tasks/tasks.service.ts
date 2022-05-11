@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ADDRGETNETWORKPARAMS } from 'dns';
 import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -19,16 +20,17 @@ export class TasksService {
   }
 
   async findOne(id: number) {
-    const task = this.tasksRepository.find(id);
+    const task = this.tasksRepository.findOne(id);
     return task;
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    const task = this.tasksRepository.update({ id }, updateTaskDto);
-    return task;
+    await this.tasksRepository.update({ id }, updateTaskDto);
+    return this.tasksRepository.find(id);
   }
 
-  remove(id: number) {
-
+  async remove(id: number) {
+    await this.tasksRepository.delete({ id });
+    return { deleted: true };
   }
 }
