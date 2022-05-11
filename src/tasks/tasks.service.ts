@@ -14,8 +14,8 @@ export class TasksService {
     return task;
   }
 
-  findAll() {
-
+  async findAll() {
+    return this.tasksRepository.find();
   }
 
   findOne(id: number) {
